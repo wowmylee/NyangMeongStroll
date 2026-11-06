@@ -28,7 +28,7 @@
 `assets/cats.png`, `assets/dogs.png`, `assets/icon.png`, `assets/tray.png`
 
 - 제작: **wowmylee** (AI 이미지 생성 도구를 사용해 만들고 다듬었어요)
-- 라이선스: 소스 코드와 같은 [MIT License](LICENSE)로 배포해요.
+- 라이선스: **CC BY-NC 4.0** (출처 표기, 상업적 이용 금지) — https://creativecommons.org/licenses/by-nc/4.0/
 
 ## 런타임
 

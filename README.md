@@ -66,6 +66,12 @@ sounds/          기본 소리 (cat1~5, dog1~5)
 
 ## 라이선스
 
-- 소스 코드: [MIT](LICENSE)
-- 소리 (`sounds/`): ESC-50 데이터셋, **CC BY-NC 3.0** (비상업적 이용만 가능). 자세한 내용은 [CREDITS.md](CREDITS.md)를 봐 주세요.
-- 그림 (`assets/`): wowmylee 제작 (AI 이미지 생성 도구 사용), MIT. [CREDITS.md](CREDITS.md) 참고
+**상업적 이용 금지 (Noncommercial only)** — 개인적인 사용, 공부, 비영리 목적으로는 자유롭게 쓰고 고칠 수 있지만, 판매하거나 유료 서비스·광고 수익 등 상업적으로 이용할 수 없어요.
+
+| 대상 | 라이선스 |
+|---|---|
+| 소스 코드 | [PolyForm Noncommercial 1.0.0](LICENSE) |
+| 그림 (`assets/`) | [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) — wowmylee 제작 (AI 이미지 생성 도구 사용) |
+| 소리 (`sounds/`) | [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/) — ESC-50 데이터셋 |
+
+자세한 출처는 [CREDITS.md](CREDITS.md)를 봐 주세요. 상업적 이용 문의는 GitHub Issues로 남겨 주세요.

@@ -6,7 +6,7 @@
   "author": "wowmylee",
   "repository": { "type": "git", "url": "https://github.com/wowmylee/NyangMeongStroll.git" },
   "homepage": "https://github.com/wowmylee/NyangMeongStroll",
-  "license": "MIT",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "private": true,
   "main": "main.js",
   "scripts": {
