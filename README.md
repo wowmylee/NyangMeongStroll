@@ -6,7 +6,7 @@
 
 ## 다운로드
 
-[**Releases**](https://github.com/wowmylee/NyangMeongStroll/releases/latest)에서 `NyangMeongStroll.exe`를 받아 실행하세요. 설치할 필요가 없는 포터블 exe예요.
+[**Releases**](https://github.com/wowmylee/NyangMeongStroll/releases/latest)에서 `NyangMeongStroll.exe`를 받아 실행하세요. 설치할 필요가 없는 포터블 exe예요. **exe 하나만 있으면 되고, Node.js 같은 다른 프로그램은 필요 없어요.**
 
 > 코드 서명이 없어서 "Windows의 PC 보호" 창이 뜰 수 있어요. **[추가 정보] → [실행]**을 누르면 실행돼요.
 > 처음 실행할 때는 압축을 푸느라 몇 초 걸려요.
@@ -34,9 +34,11 @@ exe와 같은 폴더에 `sounds` 폴더를 만들고 `cat1.wav`~`cat5.wav`, `dog
 
 `%APPDATA%\냥멍마실\settings.json`
 
-## 직접 빌드하기
+## 직접 빌드하기 (개발자용)
 
-[Node.js](https://nodejs.org/) 18 이상이 필요해요.
+> 앱을 쓰기만 할 거면 이 부분은 필요 없어요. 위의 [다운로드](#다운로드)에서 exe를 받으세요.
+
+소스 코드를 고쳐서 exe를 직접 만들 때만 [Node.js](https://nodejs.org/) 18 이상이 필요해요.
 
 ```bash
 npm install
