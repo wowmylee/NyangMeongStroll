@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; media-src 'self' file: data: blob:; style-src 'self' 'unsafe-inline'">
+<title>cats</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: transparent; user-select: none; }
+  body { font-family: "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+  canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; }
+
+  /* 고양이 위 메뉴 */
+  #menu {
+    position: fixed; left: 0; top: 0; display: none; transform: translate(-50%, -100%);
+    background: #fffdf8; border: 2px solid #f2c6cf; border-radius: 16px; padding: 6px;
+    box-shadow: 0 6px 18px rgba(80, 40, 60, .18); gap: 4px; white-space: nowrap;
+    animation: pop .18s ease-out;
+  }
+  #menu.show { display: flex; align-items: center; }
+  #menu::after {
+    content: ""; position: absolute; left: 50%; bottom: -8px; transform: translateX(-50%) rotate(45deg);
+    width: 10px; height: 10px; background: #fffdf8; border-right: 2px solid #f2c6cf; border-bottom: 2px solid #f2c6cf;
+  }
+  #menu .name { font-size: 12px; color: #b0798a; font-weight: 700; padding: 0 6px 0 4px; }
+  #menu button {
+    border: 0; border-radius: 11px; padding: 6px 10px; font: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer; color: #6b4350; background: #ffeef2; transition: transform .1s, background .1s;
+  }
+  #menu button:hover { background: #ffd9e3; transform: translateY(-1px); }
+  #menu button:active { transform: scale(.95); }
+  @keyframes pop { from { transform: translate(-50%, -90%) scale(.8); opacity: 0; } }
+
+  /* 범위 지정 */
+  #selector { position: fixed; inset: 0; display: none; cursor: crosshair; background: rgba(25, 20, 45, .38); }
+  #selector.show { display: block; }
+  #selbox, #curbox { position: fixed; border: 3px dashed #ff8fb0; border-radius: 10px; pointer-events: none; }
+  #selbox { background: rgba(255, 143, 176, .14); display: none; }
+  #curbox { border-color: rgba(255,255,255,.55); }
+  #hint {
+    position: fixed; left: 50%; top: 40px; transform: translateX(-50%); cursor: default;
+    background: #fffdf8; border-radius: 18px; padding: 16px 20px; text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,.25); color: #5b3b47;
+  }
+  #hint b { font-size: 17px; display: block; margin-bottom: 4px; }
+  #hint span { font-size: 13px; color: #9a7783; }
+  #hint .row { margin-top: 12px; display: flex; gap: 8px; justify-content: center; }
+  #hint button { border: 0; border-radius: 10px; padding: 8px 14px; font: inherit; font-weight: 700; cursor: pointer; background: #ffeef2; color: #6b4350; }
+  #hint button.alt { background: #eee; color: #555; }
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div id="menu">
+  <span class="name" id="menuName"></span>
+  <button id="btnPlay" data-i18n="play">🧶 놀아주기</button>
+  <button id="btnFeed" data-i18n="feed">🍚 밥주기</button>
+</div>
+<div id="selector">
+  <div id="curbox"></div>
+  <div id="selbox"></div>
+  <div id="hint">
+    <b data-i18n="selTitle"></b>
+    <span id="selHint" data-i18n="selHint"></span>
+    <div class="row">
+      <button id="selFull" data-i18n="selFull"></button>
+      <button id="selCancel" class="alt" data-i18n="selCancel"></button>
+    </div>
+  </div>
+</div>
+<script src="i18n.js"></script>
+<script src="sounds.js"></script>
+<script src="sprites.js"></script>
+<script src="cats.js"></script>
+<script src="overlay.js"></script>
+</body>
+</html>

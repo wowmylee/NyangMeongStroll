@@ -1,0 +1,29 @@
+{
+  "name": "nyangmeongstroll",
+  "productName": "냥멍마실",
+  "version": "1.0.0",
+  "description": "모니터 위를 돌아다니는 귀여운 고양이와 강아지 (Windows 데스크톱 펫, NyangMeongStroll)",
+  "author": "wowmylee",
+  "repository": { "type": "git", "url": "https://github.com/wowmylee/NyangMeongStroll.git" },
+  "homepage": "https://github.com/wowmylee/NyangMeongStroll",
+  "license": "MIT",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win portable --x64"
+  },
+  "devDependencies": {
+    "electron": "33.2.0",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "com.wowmylee.nyangmeongstroll",
+    "productName": "NyangMeongStroll",
+    "files": ["main.js", "preload.js", "renderer/**", "assets/**", "sounds/**"],
+    "asarUnpack": ["sounds/**"],
+    "directories": { "output": "dist" },
+    "win": { "target": "portable", "icon": "assets/icon.png" },
+    "portable": { "artifactName": "NyangMeongStroll.exe" }
+  }
+}

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; media-src 'self' file: data: blob:; style-src 'self' 'unsafe-inline'">
+<title>냥멍마실 설정</title>
+<style>
+  :root {
+    --bg: #FFF8F3; --card: #FFFFFF; --ink: #5B3B47; --sub: #9A7783; --line: #F3DDE3;
+    --accent: #FF8FB0; --accent-soft: #FFEEF3; --accent-ink: #C24D73;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 14px; padding: 18px 18px 28px;
+  }
+  header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  header canvas { width: 54px; height: 54px; }
+  header h1 { font-size: 19px; margin: 0; }
+  header p { margin: 2px 0 0; color: var(--sub); font-size: 12.5px; }
+  section { background: var(--card); border: 1.5px solid var(--line); border-radius: 18px; padding: 14px 16px; margin-bottom: 12px; }
+  h2 { font-size: 14.5px; margin: 0 0 10px; display: flex; align-items: center; gap: 6px; }
+  h2 small { font-weight: 500; color: var(--sub); font-size: 12px; margin-left: auto; }
+
+  .cat { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 14px; background: #FFFBF8; border: 1px solid #F7E8EC; margin-bottom: 8px; }
+  .cat canvas { width: 58px; height: 58px; flex: none; background: var(--accent-soft); border-radius: 12px; }
+  .cat .fields { flex: 1; display: grid; gap: 5px; min-width: 0; }
+  input[type=text], select {
+    width: 100%; border: 1.5px solid var(--line); border-radius: 10px; padding: 6px 9px; font: inherit; color: var(--ink); background: #fff;
+  }
+  input[type=text]:focus, select:focus { outline: none; border-color: var(--accent); }
+  .del { border: 0; background: none; font-size: 18px; cursor: pointer; color: #C9A9B3; padding: 4px 6px; border-radius: 8px; }
+  .del:hover { background: #FFE4EA; color: var(--accent-ink); }
+
+  .breeds { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .breed { border: 1.5px solid var(--line); border-radius: 12px; background: #fff; padding: 4px 2px 5px; cursor: pointer; text-align: center; font: inherit; font-size: 11px; color: var(--ink); }
+  .breed canvas { width: 100%; aspect-ratio: 1; display: block; }
+  .breed:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-1px); }
+  .hint { color: var(--sub); font-size: 12px; margin: 8px 0 0; }
+
+  .row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+  .row label { flex: none; width: 74px; color: var(--sub); }
+  .row output { width: 54px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; }
+  input[type=range] { flex: 1; accent-color: var(--accent); }
+  #sizePrev { display: block; margin: 4px auto 0; background: repeating-linear-gradient(0deg, transparent 0 23px, #F7E8EC 23px 24px); border-radius: 12px; }
+
+  .btn { border: 0; border-radius: 12px; padding: 9px 14px; font: inherit; font-weight: 700; cursor: pointer; background: var(--accent-soft); color: var(--accent-ink); }
+  .btn:hover { background: #FFDCE6; }
+  .btn.main { background: var(--accent); color: #fff; }
+  .btn.main:hover { background: #F7759C; }
+  .btn.ghost { background: #F2EEEF; color: #7d6870; }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .region { background: #FFFBF8; border: 1px dashed #F0C4D0; border-radius: 12px; padding: 8px 10px; color: var(--sub); font-size: 12.5px; }
+
+  .toggle { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #FAEEF1; }
+  .toggle:last-child { border-bottom: 0; }
+  .toggle small { display: block; color: var(--sub); font-size: 11.5px; }
+  .sw { position: relative; width: 42px; height: 24px; flex: none; }
+  .sw input { opacity: 0; width: 0; height: 0; }
+  .sw span { position: absolute; inset: 0; background: #E9DCE0; border-radius: 24px; cursor: pointer; transition: .15s; }
+  .sw span::after { content: ""; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: .15s; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+  .sw input:checked + span { background: var(--accent); }
+  .sw input:checked + span::after { transform: translateX(18px); }
+  .packHead { display: flex; align-items: center; gap: 8px; margin: 14px 0 6px; font-weight: 700; font-size: 13px; }
+  .packHead:first-child { margin-top: 2px; }
+  .packHead .tag { font-size: 11px; font-weight: 600; color: #a08890; background: #F6EEF0; border-radius: 8px; padding: 2px 7px; }
+  .packHead .tag.mine { color: #3f7a5a; background: #E6F5EC; }
+  .packHead button { margin-left: auto; border: 0; background: #FFF0F2; color: #C24D73; border-radius: 9px; padding: 4px 9px; font: inherit; font-size: 12px; cursor: pointer; }
+  .packHead button:hover { background: #FFDCE6; }
+  #addPack { width: 100%; margin-top: 12px; border: 2px dashed #F0C4D0; background: #FFFBF8; color: var(--accent-ink); }
+  #addPack:hover { background: var(--accent-soft); }
+
+  /* 그림 추가 창 */
+  #importer { position: fixed; inset: 0; background: rgba(60, 30, 45, .45); display: none; align-items: flex-start; justify-content: center; padding: 14px; overflow: auto; z-index: 10; }
+  #importer.show { display: flex; }
+  .imp { background: var(--bg); border-radius: 20px; width: 100%; max-width: 760px; padding: 16px 18px; box-shadow: 0 20px 50px rgba(0,0,0,.25); }
+  .imp h3 { margin: 0 0 4px; font-size: 17px; }
+  .imp .guide { color: var(--sub); font-size: 12.5px; line-height: 1.6; margin: 0 0 10px; }
+  .drop { border: 2px dashed #F0C4D0; border-radius: 16px; padding: 22px; text-align: center; color: var(--sub); background: #fff; cursor: pointer; }
+  .drop.over { background: var(--accent-soft); border-color: var(--accent); }
+  .drop b { color: var(--accent-ink); }
+  .impTop { display: grid; grid-template-columns: 1fr 150px; gap: 8px; margin: 10px 0; }
+  .impRow { background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 8px 10px; margin-bottom: 8px; }
+  .impRow.off { opacity: .45; }
+  .impRow .rh { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+  .impRow .rh input[type=text] { max-width: 200px; }
+  .impRow .rh canvas { width: 54px; height: 54px; background: var(--accent-soft); border-radius: 10px; margin-left: auto; }
+  .frames { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+  .fr { flex: none; width: 74px; text-align: center; }
+  .fr canvas { width: 74px; height: 64px; background: #FBF5F6; border-radius: 8px; display: block; }
+  .fr select { font-size: 11px; padding: 3px 2px; border-radius: 7px; margin-top: 3px; }
+  .fr .face { border: 0; background: #F6EEF0; border-radius: 7px; font-size: 11px; width: 100%; margin-top: 3px; padding: 2px; cursor: pointer; color: var(--ink); }
+  .impBtns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 10px; position: sticky; bottom: 0; background: var(--bg); padding-top: 8px; }
+  .msg { font-size: 12.5px; color: var(--accent-ink); min-height: 18px; margin-top: 6px; }
+  header #lang { margin-left: auto; width: auto; align-self: flex-start; font-size: 12.5px; padding: 5px 8px; }
+  .row.snd select { flex: 1; }
+  .btn.small { padding: 6px 10px; font-size: 12.5px; flex: none; }
+  .row label { width: 92px; }
+  footer { display: flex; justify-content: space-between; align-items: center; color: var(--sub); font-size: 12px; margin-top: 6px; }
+</style>
+</head>
+<body>
+<header>
+  <canvas id="logo" width="108" height="108"></canvas>
+  <div>
+    <h1 data-i18n="appName"></h1>
+    <p data-i18n="headerHelp"></p>
+  </div>
+  <select id="lang" title="언어 / Language"><option value="ko">한국어</option><option value="en">English</option></select>
+</header>
+
+<section>
+  <h2><span data-i18n="myPets"></span> <small id="catCount"></small></h2>
+  <div id="catList"></div>
+</section>
+
+<section>
+  <h2><span data-i18n="adopt"></span> <small data-i18n="adoptHint"></small></h2>
+  <div id="breedGroups"></div>
+  <button class="btn" id="addPack" data-i18n="addPack"></button>
+</section>
+
+<section>
+  <h2 data-i18n="sizeSec"></h2>
+  <div class="row"><label data-i18n="size"></label><input type="range" id="size" min="40" max="220" step="2"><output id="sizeOut"></output></div>
+  <canvas id="sizePrev" width="760" height="260" style="width:380px;height:130px"></canvas>
+  <div class="row"><label data-i18n="activity"></label><input type="range" id="activity" min="0.5" max="1.6" step="0.1"><output id="actOut"></output></div>
+</section>
+
+<section>
+  <h2 data-i18n="regionSec"></h2>
+  <div class="row"><label data-i18n="monitor"></label><select id="display"></select></div>
+  <div class="region" id="regionText"></div>
+  <div class="btns">
+    <button class="btn main" id="pickRegion" data-i18n="drawRegion"></button>
+    <button class="btn" id="fullRegion" data-i18n="fullRegion"></button>
+  </div>
+</section>
+
+<section>
+  <h2 data-i18n="soundSec"></h2>
+  <div class="toggle"><div><span data-i18n="sound"></span><small data-i18n="soundDesc"></small></div><label class="sw"><input type="checkbox" id="sound"><span></span></label></div>
+  <div class="row snd"><label data-i18n="catSound"></label><select id="catSound"></select><button class="btn small" id="testCat" data-i18n="listen"></button></div>
+  <div class="row snd"><label data-i18n="dogSound"></label><select id="dogSound"></select><button class="btn small" id="testDog" data-i18n="listen"></button></div>
+  <div class="row"><label data-i18n="volume"></label><input type="range" id="volume" min="0" max="1" step="0.05"><output id="volOut"></output></div>
+  <p class="hint" data-i18n-html="soundFileHint"></p>
+  <div class="btns"><button class="btn" id="openSounds" data-i18n="openSounds"></button><button class="btn ghost" id="openImages" data-i18n="openImages"></button></div>
+</section>
+
+<section>
+  <h2 data-i18n="etcSec"></h2>
+  <div class="toggle"><div><span data-i18n="names"></span><small data-i18n="namesDesc"></small></div><label class="sw"><input type="checkbox" id="showNames"><span></span></label></div>
+  <div class="toggle"><div><span data-i18n="hide"></span><small data-i18n="hideDesc"></small></div><label class="sw"><input type="checkbox" id="paused"><span></span></label></div>
+  <div class="toggle"><div data-i18n="autoStart"></div><label class="sw"><input type="checkbox" id="autoStart"><span></span></label></div>
+</section>
+
+<footer>
+  <span data-i18n="footer"></span>
+  <button class="btn ghost" id="quit" data-i18n="quit"></button>
+</footer>
+
+<div id="importer">
+  <div class="imp">
+    <h3 data-i18n="impTitle"></h3>
+    <p class="guide" data-i18n-html="impGuide"></p>
+    <div class="drop" id="drop" data-i18n-html="impDrop"></div>
+    <input type="file" id="file" accept="image/png,image/jpeg,image/webp" hidden>
+    <div id="impBody" hidden>
+      <div class="impTop">
+        <input type="text" id="packName" data-i18n-ph="packNamePh" maxlength="16">
+        <select id="packVoice"><option value="other" data-i18n="voiceOther"></option><option value="cat" data-i18n="voiceCat"></option><option value="dog" data-i18n="voiceDog"></option></select>
+      </div>
+      <div id="impRows"></div>
+    </div>
+    <div class="msg" id="impMsg"></div>
+    <div class="impBtns">
+      <button class="btn ghost" id="impCancel" data-i18n="close"></button>
+      <button class="btn main" id="impSave" disabled data-i18n="addBtn"></button>
+    </div>
+  </div>
+</div>
+
+<script src="i18n.js"></script>
+<script src="sounds.js"></script>
+<script src="sprites.js"></script>
+<script src="slicer.js"></script>
+<script src="cats.js"></script>
+<script src="settings.js"></script>
+</body>
+</html>

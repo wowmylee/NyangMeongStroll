@@ -1,0 +1,22 @@
+# 의존성 / 빌드 결과물
+node_modules/
+dist/
+out/
+*.exe
+*.7z
+*.zip
+*.blockmap
+
+# 원본 백업 그림
+assets/원본백업/
+
+# 로그 / 임시 파일
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 에디터
+.vscode/
+.idea/
